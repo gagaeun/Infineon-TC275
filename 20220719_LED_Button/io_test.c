@@ -35,8 +35,8 @@
 /*********************************************************************************************************************/
 #define LED     &MODULE_P00,5   /* Port pin for the LED     */
 #define LED2     &MODULE_P00,6   /* Port pin for the LED     */
-#define BUTTON  &MODULE_P00,7   /* Port pin for the button  */
-
+//#define BUTTON  &MODULE_P00,7   /* Port pin for the button  */
+#define PORT &MODULE_P00,3
 /*********************************************************************************************************************/
 /*---------------------------------------------Function Implementations----------------------------------------------*/
 /*********************************************************************************************************************/
@@ -48,11 +48,11 @@ void init_GPIOs(void)
      */
     IfxPort_setPinMode(LED, IfxPort_Mode_outputPushPullGeneral);
     IfxPort_setPinMode(LED2, IfxPort_Mode_outputPushPullGeneral);
-
     /* Setup the port pin connected to the push button to input mode. This function can be used to initialize any
      * port to input mode by just specifying the port number as illustrated.
      */
-    IfxPort_setPinMode(BUTTON, IfxPort_Mode_inputPullUp);
+    //IfxPort_setPinMode(BUTTON, IfxPort_Mode_inputPullUp);
+    IfxPort_setPinMode(PORT, IfxPort_Mode_inputPullUp);
 }
 
 /* Depending on the the state of the "BUTTON" port pin, the LED is turned on or off */
@@ -62,15 +62,15 @@ void control_LED(void)
      * function can be used to retrieve any port state by just specifying the port number
      * as illustrated.
      */
-    if(IfxPort_getPinState(BUTTON) == 0)
+    //if(IfxPort_getPinState(BUTTON) == 0)
+    if(IfxPort_getPinState(PORT) == 0)
     {
         /* With the routine setPinState() the state of the port can be set to drive either
          * LOW or HIGH. This function can be used to retrieve any port state by just
          * specifying the port number as illustrated.
          */
-        IfxPort_setPinState(LED, IfxPort_State_low);
         IfxPort_setPinState(LED2, IfxPort_State_high);
-
+        IfxPort_setPinState(LED, IfxPort_State_low);
     }
     else
     {
@@ -78,4 +78,3 @@ void control_LED(void)
         IfxPort_setPinState(LED2, IfxPort_State_low);
     }
 }
-
